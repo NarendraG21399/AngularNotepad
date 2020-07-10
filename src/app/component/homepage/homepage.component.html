@@ -5,10 +5,11 @@
            
             <div class="w3-third w3-margin-bottom" *ngFor="let note of notepadList">
                 <div class="w3-container w3-white">
-                    <p><b>{{note.title}}</b></p>
+                     <p><b>{{note.title}}</b></p>
                     <p class="w3-opacity">Create Date: {{note.create | date}}</p>
                     <p>Last Modified Date: {{note.modified | date:'medium'}}</p>
-                    <button class="w3-button w3-black w3-margin-bottom"  (click)="navigate(note)">EDIT</button>
+                    <button class="w3-button w3-black w3-margin-bottom"  (click)="navigate(note)">EDIT  <i *ngIf="note.isLock" class="fa fa-lock"></i></button>
+                  
                 </div>
             </div>
         </div>

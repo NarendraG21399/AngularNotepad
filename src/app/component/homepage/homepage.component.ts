@@ -19,20 +19,24 @@ export class HomepageComponent implements OnInit {
   }
   public navigate(notepad: notepad){
     if(notepad.isLock){
-      this.openDialog(notepad.password);
-     // this.router.navigate(['CreteNotepad', notepad.id])
+      this.openDialog(notepad);
       return ;
     }
     this.router.navigate(['CreteNotepad', notepad.id])
   }
-  openDialog(password:string): void {
+  openDialog( notepad): void {
     const dialogRef = this.dialog.open(PasswordVerifyDialoComponent, {
-      width: '250px',
-      data: {password: password}
+      width: '330px',
+      height: '230px',
+      hasBackdrop: false,
+      data: {password: notepad.password}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-     });
+      console.log(result);
+      if(result.validate){
+        this.router.navigate(['CreteNotepad', notepad.id])
+      }
+      });
   }
 }
