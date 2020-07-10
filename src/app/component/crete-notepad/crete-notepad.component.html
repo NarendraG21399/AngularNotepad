@@ -1,0 +1,5 @@
+<form role="form"   accept-charset="UTF-8"      >
+    <textarea autofocus cols="150" rows="40" [(ngModel)]="notepad.text" [ngModelOptions]="{standalone: true}"></textarea>
+  </form>
+  <button (click)="saveNotepad()">Save</button>
+  <button (click)="lockNotepad()">Lock</button>
