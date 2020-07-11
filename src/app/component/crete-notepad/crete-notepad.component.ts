@@ -10,7 +10,7 @@ import { NotepadService } from 'src/app/service/notepad.service';
 })
 export class CreteNotepadComponent implements OnInit, OnDestroy {
   private id: number;
-  public notepad: any= {isLock: false , password: null};
+  public notepad: any = { isLock: false, password: null };
   public text: string;
   constructor(private activatedRoute: ActivatedRoute, private notepadservice: NotepadService) {
     this.activatedRoute.params.subscribe(params => {
@@ -21,7 +21,7 @@ export class CreteNotepadComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this.id) {
       this.notepad = this.notepadservice.getList().find(data => data.id === this.id);
-       console.log(this.notepad)
+      console.log(this.notepad)
     }
   }
 
@@ -33,21 +33,21 @@ export class CreteNotepadComponent implements OnInit, OnDestroy {
     }
   }
   private createNotePad() {
-    this.notepadservice.setList({ id: new Date().getTime(), text: this.notepad.text, modified: new Date(), title: 'gawade', create: new Date(), isLock:  this.notepad.isLock , password: this.notepad.password })
+    this.notepadservice.setList({ id: new Date().getTime(), text: this.notepad.text, modified: new Date(), title: 'gawade', create: new Date(), isLock: this.notepad.isLock, password: this.notepad.password })
   }
   private updateNoted() {
     this.notepadservice.getList().forEach(ele => {
       if (ele.id === this.id) {
-        ele.text = this.notepad.text,
-        ele.modified = new Date();
-        ele.isLock = this.notepad.isLock;
+          ele.text = this.notepad.text,
+          ele.modified = new Date();
+          ele.isLock = this.notepad.isLock;
       }
     })
-    this.notepadservice.setLocalstrorage();
+     this.notepadservice.setLocalstrorage();
   }
-  lockNotepad(){
-  this.notepad.isLock = !this.notepad.isLock;
-  this.notepad.password = 'Narendra';
+  lockNotepad() {
+    this.notepad.isLock = !this.notepad.isLock;
+    this.notepad.password = 'Narendra';
   }
   ngOnDestroy(): void {
 

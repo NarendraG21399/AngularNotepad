@@ -1,4 +1,5 @@
-<div class="w3-black" id="tour">
+<app-password-verify-dialo *ngIf="showModel" [notepad]="selectedList" (onclosed)="validate($event)"></app-password-verify-dialo>
+<div class="w3-black"  >
     <div class="w3-container w3-content w3-padding-64" style="max-width:800px">
         <h2 class="w3-wide w3-center">YOUR NOTES</h2>
         <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
@@ -8,10 +9,10 @@
                      <p><b>{{note.title}}</b></p>
                     <p class="w3-opacity">Create Date: {{note.create | date}}</p>
                     <p>Last Modified Date: {{note.modified | date:'medium'}}</p>
-                    <button class="w3-button w3-black w3-margin-bottom"  (click)="navigate(note)">EDIT  <i *ngIf="note.isLock" class="fa fa-lock"></i></button>
-                  
+                    <button class="w3-button w3-black w3-margin-bottom"  (click)="navigate(note)">EDIT  <i *ngIf="note.isLock" class="fa fa-lock"></i></button>     
                 </div>
             </div>
         </div>
     </div>
-</div>  
+</div> 
+ 
