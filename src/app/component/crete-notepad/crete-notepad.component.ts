@@ -14,7 +14,9 @@ export class CreteNotepadComponent implements OnInit, OnDestroy {
   public text: string;
   public password: boolean;
   public isSaveNotepad: boolean;
-  message: string;
+  public message: string;
+  public toaster: boolean;
+
   constructor(private activatedRoute: ActivatedRoute, private notepadservice: NotepadService) {
     this.activatedRoute.params.subscribe(params => {
       this.id = +params['id'];
@@ -41,6 +43,8 @@ export class CreteNotepadComponent implements OnInit, OnDestroy {
     if (event) {
       this.notepad = { id: new Date().getTime(), text: this.notepad.text, modified: new Date(), title: event, create: new Date(), isLock: this.notepad.isLock, password: this.notepad.password }
       this.notepadservice.setList(this.notepad);
+      
+      this.showtoaster('file saved sucessfully!')
     }
   }
 
@@ -54,7 +58,7 @@ export class CreteNotepadComponent implements OnInit, OnDestroy {
       }
     })
     this.notepadservice.setLocalstrorage();
-    this.message = '';
+    this.showtoaster('file saved sucessfully!')
   }
   lockNotepad() {
     this.password = true;
@@ -64,10 +68,22 @@ export class CreteNotepadComponent implements OnInit, OnDestroy {
     if (event) {
       this.notepad.isLock = !this.notepad.isLock;
       this.notepad.password = event;
+     this.showtoaster('file lock sucessfully!')
     }
   }
 
+  private showtoaster(message){
+    this.toaster = true;
+    this.message = message;
+    setTimeout(() => {this.toaster = false }, 3000);
+  }
 
+  public unLock(){
+    if(confirm('Are you sure')){
+    this.notepad.isLock = !this.notepad.isLock;
+    this.showtoaster('file unlocked Sucessfully');
+    }
+  }
   ngOnDestroy(): void {
   }
 }

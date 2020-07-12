@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-toaster',
@@ -6,13 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./toaster.component.scss']
 })
 export class ToasterComponent implements OnInit {
-
+  @Input() public message:string; 
   constructor() { }
 
   ngOnInit(): void {
-    const x = document.getElementById("snackbar");
-    x.className = "show";
-    setTimeout( ()=> { x.className = x.className.replace("show", ""); }, 3000)
+    
+  
   }
 
 }
