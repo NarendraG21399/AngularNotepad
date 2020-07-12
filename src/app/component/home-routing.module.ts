@@ -2,25 +2,31 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomepageComponent } from './homepage/homepage.component';
 import { CreteNotepadComponent } from './crete-notepad/crete-notepad.component';
+import { AuthGuard } from '../service/auth.guard';
 
 
-const routes: Routes = [{
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
   path: 'home',
    component:HomepageComponent
 },
+
 {
   path: 'CreteNotepad',
   component: CreteNotepadComponent
 },
 {
-  path: 'CreteNotepad/:id',
-  component: CreteNotepadComponent
+  path: 'editNotepad/:id',
+  component: CreteNotepadComponent,
+  canActivate: [AuthGuard]
 },
-{
-  path: '',
-  redirectTo: 'home',
-  pathMatch: 'full'
-}];
+
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

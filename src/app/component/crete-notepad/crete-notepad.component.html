@@ -1,5 +1,13 @@
+<div  class="container">
+  <div class="btn">
+<button class="w3-button w3-black w3-margin-bottom" (click)="saveNotepad()" >Save</button> 
+<button class="w3-button w3-black w3-margin-bottom" *ngIf="notepad.isLock" (click)="notepad.isLock = !notepad.isLock" >Unlock  </button>
+<button  class="w3-button w3-black w3-margin-bottom" *ngIf="!notepad.isLock"  (click)="lockNotepad()">Lock</button>
+</div>
 <form role="form"   accept-charset="UTF-8">
-    <textarea autofocus cols="150" rows="40" [(ngModel)]="notepad.text" [ngModelOptions]="{standalone: true}"></textarea>
+  <textarea autofocus cols="150" rows="40" [(ngModel)]="notepad.text" [ngModelOptions]="{standalone: true}"></textarea>
   </form>
-  <button (click)="saveNotepad()">Save</button>
-  <button (click)="lockNotepad()">Lock</button>
+  </div>
+  <app-password-verify-dialo *ngIf="password" [fromCreateNote]="true" (onclosed)="savePassword($event)"></app-password-verify-dialo>
+  <app-notepad-save *ngIf="isSaveNotepad"  (saveNotePad)="createNotePad($event)"></app-notepad-save>
+  <app-toaster *ngIf="isSaveNotepad"></app-toaster>

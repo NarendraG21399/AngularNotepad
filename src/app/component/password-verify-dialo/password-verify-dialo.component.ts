@@ -10,6 +10,7 @@ import { notepad } from '../model/notepad';
 export class PasswordVerifyDialoComponent implements OnInit {
   @Input() public notepad: notepad;
   @Output() private onclosed = new EventEmitter();
+  @Input () public fromCreateNote: boolean;
   public FormGroup: FormGroup;
   public isPasswordRight = true;
   public isSubmit = false;
@@ -17,13 +18,16 @@ export class PasswordVerifyDialoComponent implements OnInit {
 
   ngOnInit(): void {
     this.FormGroup = new FormGroup({
-      password: new FormControl('', [Validators.required])
+      password: new FormControl('', [Validators.required, Validators.minLength(6)])
 
     } );
   }
   public onSubmit(): void {
     this.isSubmit = true;
-    if (this.FormGroup.value.password === this.notepad.password) {
+    if(this.fromCreateNote &&  this.FormGroup.valid){
+      this.close(this.FormGroup.value.password)
+    }
+    else if (!this.fromCreateNote && this.FormGroup.value.password === this.notepad.password && this.FormGroup.valid )  {
       this.close(true);
     }
     this.isPasswordRight = false;
@@ -32,4 +36,5 @@ export class PasswordVerifyDialoComponent implements OnInit {
   public close(validate): void {
     this.onclosed.emit(validate);
   }
+
 }

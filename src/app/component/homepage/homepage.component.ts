@@ -14,6 +14,10 @@ export class HomepageComponent implements OnInit {
   constructor(private notepadservice: NotepadService, private router: Router) { }
 
   ngOnInit(): void {
+    this.getNotepadList();
+  }
+
+  private getNotepadList(){
     this.notepadList = this.notepadservice.getList();
   }
   public navigate(notepad: notepad) {
@@ -22,13 +26,19 @@ export class HomepageComponent implements OnInit {
       this.selectedList = notepad;
       return;
     }
-    this.router.navigate(['CreteNotepad', notepad.id])
+    this.router.navigate(['editNotepad', notepad.id])
   }
   public validate(data?) {
     if(data){
-      this.router.navigate(['CreteNotepad', this.selectedList.id])
+      this.router.navigate(['editNotepad', this.selectedList.id])
     }
     this.showModel = false;
+  }
+  public delete(notepad: notepad): void{
+    if(confirm('Are you Sure')){
+    this.notepadservice.delete(notepad.id);
+    this.getNotepadList();
+    }
   }
 
 }

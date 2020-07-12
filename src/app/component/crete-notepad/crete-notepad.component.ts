@@ -12,6 +12,9 @@ export class CreteNotepadComponent implements OnInit, OnDestroy {
   private id: number;
   public notepad: any = { isLock: false, password: null };
   public text: string;
+  public password: boolean;
+  public isSaveNotepad: boolean;
+  message: string;
   constructor(private activatedRoute: ActivatedRoute, private notepadservice: NotepadService) {
     this.activatedRoute.params.subscribe(params => {
       this.id = +params['id'];
@@ -21,35 +24,50 @@ export class CreteNotepadComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this.id) {
       this.notepad = this.notepadservice.getList().find(data => data.id === this.id);
-      console.log(this.notepad)
+
     }
+
   }
 
   public saveNotepad(): void {
-    if (this.id) {
+    if (this.id || this.notepad.id) {
       this.updateNoted();
     } else {
-      this.createNotePad();
+      this.isSaveNotepad = true;
     }
   }
-  private createNotePad() {
-    this.notepadservice.setList({ id: new Date().getTime(), text: this.notepad.text, modified: new Date(), title: 'gawade', create: new Date(), isLock: this.notepad.isLock, password: this.notepad.password })
+  public createNotePad(event) {
+    this.isSaveNotepad = false;
+    if (event) {
+      this.notepad = { id: new Date().getTime(), text: this.notepad.text, modified: new Date(), title: event, create: new Date(), isLock: this.notepad.isLock, password: this.notepad.password }
+      this.notepadservice.setList(this.notepad);
+    }
   }
+
+
   private updateNoted() {
     this.notepadservice.getList().forEach(ele => {
       if (ele.id === this.id) {
-          ele.text = this.notepad.text,
+        ele.text = this.notepad.text,
           ele.modified = new Date();
-          ele.isLock = this.notepad.isLock;
+        ele.isLock = this.notepad.isLock;
       }
     })
-     this.notepadservice.setLocalstrorage();
+    this.notepadservice.setLocalstrorage();
+    this.message = '';
   }
   lockNotepad() {
-    this.notepad.isLock = !this.notepad.isLock;
-    this.notepad.password = 'Narendra';
+    this.password = true;
   }
-  ngOnDestroy(): void {
+  public savePassword(event) {
+    this.password = false;
+    if (event) {
+      this.notepad.isLock = !this.notepad.isLock;
+      this.notepad.password = event;
+    }
+  }
 
+
+  ngOnDestroy(): void {
   }
 }

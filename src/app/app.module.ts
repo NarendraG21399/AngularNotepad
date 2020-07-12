@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
   
+  
  
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
+   
      
   ],
   imports: [

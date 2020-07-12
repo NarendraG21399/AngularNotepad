@@ -7,3 +7,15 @@
     z-index: 10;
     background-color: rgba(0,0,0,0.5); /*dim the background*/
   }
+  .btn {
+    display: flex;
+    justify-content: space-between;
+  }
+  .delete{
+    float: right;
+     top: 0;
+    color: #000;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+  }

@@ -7,6 +7,7 @@ import { notepad } from '../component/model/notepad';
 })
 export class NotepadService {
   private notepad: notepad[] =  JSON.parse(localStorage.getItem('notepadlist')) || [];
+  public isAuthenticate:boolean;
   constructor() {}
 
 
@@ -23,4 +24,9 @@ export class NotepadService {
      localStorage.setItem('notepadlist' , JSON.stringify(this.notepad))
   }
   
+  public delete(id){
+    const notepad = this.notepad.filter(ele => ele.id !== id);
+    this.notepad = notepad;
+    this.setLocalstrorage();
+  }
 }
