@@ -1,38 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  name = 'ng2-ckeditor';    
-  ckeConfig: any;    
-   mycontent: string;    
-  log: string   
-  @ViewChild('PageContent') PageContent: any;    
-  res: any;    
+export class AppComponent implements OnInit {
+  constructor() {}
 
-  constructor(  ) { }    
-   
-
-  ngOnInit() {    
-    this.Getcontent()    
-    this.ckeConfig = {    
-      allowedContent: false,    
-      extraPlugins: 'divarea',    
-      forcePasteAsPlainText: true    
-    };     
-  }    
-  onSubmit()    
-  {    
-    debugger;    
-    debugger;    
-      
-  }    
-  Getcontent()    
-  {    
-      
-  }    
-  
+  ngOnInit() {}
 }

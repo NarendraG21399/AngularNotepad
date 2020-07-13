@@ -6,12 +6,10 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./toaster.component.scss']
 })
 export class ToasterComponent implements OnInit {
-  @Input() public message:string; 
+  @Input() public message: string;
   constructor() { }
 
   ngOnInit(): void {
-    
-  
   }
 
 }

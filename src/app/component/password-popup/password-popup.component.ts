@@ -1,14 +1,14 @@
-import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit,  Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { notepad } from '../model/notepad';
+import { Notepad } from '../model/notepad';
 
 @Component({
-  selector: 'app-password-verify-dialo',
-  templateUrl: './password-verify-dialo.component.html',
-  styleUrls: ['./password-verify-dialo.component.scss']
+  selector: 'app-password-popup',
+  templateUrl: './password-popup.component.html',
+  styleUrls: ['./password-popup.component.scss']
 })
-export class PasswordVerifyDialoComponent implements OnInit {
-  @Input() public notepad: notepad;
+export class PasswordPopupComponent implements OnInit {
+  @Input() public notepad: Notepad;
   @Output() private onclosed = new EventEmitter();
   @Input () public fromCreateNote: boolean;
   public FormGroup: FormGroup;
@@ -24,8 +24,8 @@ export class PasswordVerifyDialoComponent implements OnInit {
   }
   public onSubmit(): void {
     this.isSubmit = true;
-    if(this.fromCreateNote &&  this.FormGroup.valid){
-      this.close(this.FormGroup.value.password)
+    if (this.fromCreateNote &&  this.FormGroup.valid){
+      this.close(this.FormGroup.value.password);
     }
     else if (!this.fromCreateNote && this.FormGroup.value.password === this.notepad.password && this.FormGroup.valid )  {
       this.close(true);

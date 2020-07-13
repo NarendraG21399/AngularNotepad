@@ -18,13 +18,13 @@ export class NotepadSaveComponent implements OnInit {
 
     } );
   }
-  public onSubmit():void{
+  public onSubmit(): void{
    this.isSubmit = true;
-   if(this.FormGroup.valid){
+   if (this.FormGroup.valid){
    this.saveNotePad.emit(this.FormGroup.value.Name);
    }
   }
-  public close():void{
+  public close(): void{
     this.saveNotePad.emit();
   }
 }

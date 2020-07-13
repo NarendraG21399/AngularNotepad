@@ -1,43 +1,44 @@
 import { Component, OnInit } from '@angular/core';
-import { notepad } from '../model/notepad';
+import { Notepad } from '../model/notepad';
 import { NotepadService } from 'src/app/service/notepad.service';
 import { Router } from '@angular/router';
+import { CONSTANT, ROUTINGPATH } from '../share/constant';
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
-  public notepadList: notepad[];
+  public notepadList: Notepad[];
   public showModel = false;
-  public selectedList: notepad;
+  public selectedList: Notepad;
   constructor(private notepadservice: NotepadService, private router: Router) { }
 
   ngOnInit(): void {
     this.getNotepadList();
   }
 
-  private getNotepadList(){
+  private getNotepadList() {
     this.notepadList = this.notepadservice.getList();
   }
-  public navigate(notepad: notepad) {
+  public navigate(notepad: Notepad) {
     if (notepad.isLock) {
       this.showModel = true;
       this.selectedList = notepad;
       return;
     }
-    this.router.navigate(['editNotepad', notepad.id])
+    this.router.navigate([ROUTINGPATH.EDIT_NOTEPAD, notepad.id]);
   }
   public validate(data?) {
-    if(data){
-      this.router.navigate(['editNotepad', this.selectedList.id])
+    if (data) {
+      this.router.navigate([ROUTINGPATH.EDIT_NOTEPAD, this.selectedList.id]);
     }
     this.showModel = false;
   }
-  public delete(notepad: notepad): void{
-    if(confirm('Are you Sure')){
-    this.notepadservice.delete(notepad.id);
-    this.getNotepadList();
+  public delete(notepad: Notepad): void {
+    if (confirm(CONSTANT.CONFIRM_MESSAGE)) {
+      this.notepadservice.delete(notepad.id);
+      this.getNotepadList();
     }
   }
 

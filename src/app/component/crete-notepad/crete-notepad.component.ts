@@ -1,33 +1,35 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { notepad } from '../model/notepad';
+import { Notepad } from '../model/notepad';
 import { NotepadService } from 'src/app/service/notepad.service';
-
+import { CONSTANT } from '../share/constant';
 @Component({
   selector: 'app-crete-notepad',
   templateUrl: './crete-notepad.component.html',
-  styleUrls: ['./crete-notepad.component.scss']
+  styleUrls: ['./crete-notepad.component.scss'],
 })
-export class CreteNotepadComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CreteNotepadComponent implements OnInit, AfterViewInit {
   @ViewChild('autofocus') focus: ElementRef;
   private id: number;
-  public notepad: any = { isLock: false, password: null };
+  public notepad: Notepad = { isLock: false, password: null };
   public text: string;
   public password: boolean;
   public isSaveNotepad: boolean;
   public message: string;
   public toaster: boolean;
 
-  constructor(private activatedRoute: ActivatedRoute, private notepadservice: NotepadService) {
-    this.activatedRoute.params.subscribe(params => {
-      this.id = +params['id'];
-      console.log(this.id)
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private notepadservice: NotepadService
+  ) {
+    this.activatedRoute.params.subscribe((params) => {
+      this.id = +params.id;
     });
   }
 
   ngOnInit(): void {
     if (this.id) {
-      this.notepad = this.notepadservice.getList().find(data => data.id === this.id);
+      this.notepad = this.notepadservice.getNotepad(this.id);
     }
   }
   ngAfterViewInit(): void {
@@ -43,49 +45,46 @@ export class CreteNotepadComponent implements OnInit, OnDestroy, AfterViewInit {
   public createNotePad(event) {
     this.isSaveNotepad = false;
     if (event) {
-      this.notepad = { id: new Date().getTime(), text: this.notepad.text, modified: new Date(), title: event, create: new Date(), isLock: this.notepad.isLock, password: this.notepad.password }
+      this.notepad = new Notepad(
+        this.notepad.text,
+        event,
+        this.notepad.isLock,
+        this.notepad.password
+      );
       this.notepadservice.setList(this.notepad);
-
-      this.showtoaster('file saved sucessfully!')
+      this.showtoaster(CONSTANT.FILE_SAVE__MESSAGE);
     }
   }
 
-
   private updateNoted() {
-    this.notepadservice.getList().forEach(ele => {
-      if (ele.id === this.id) {
-        ele.text = this.notepad.text,
-          ele.modified = new Date();
-        ele.isLock = this.notepad.isLock;
-      }
-    })
-    this.notepadservice.setLocalstrorage();
-    this.showtoaster('file saved sucessfully!')
+    this.notepadservice.updateNotepad(this.id , this.notepad.text, this.notepad.isLock);
+    this.showtoaster(CONSTANT.FILE_UPDATE__MESSAGE);
   }
-  lockNotepad() {
+  public lockNotepad(): void {
     this.password = true;
   }
-  public savePassword(event) {
+  public savePassword(event): void {
     this.password = false;
     if (event) {
       this.notepad.isLock = !this.notepad.isLock;
       this.notepad.password = event;
-      this.showtoaster('file lock sucessfully!')
+      this.showtoaster(CONSTANT.FILE_LOCK_MESSAGE);
     }
   }
 
-  private showtoaster(message) {
+  private showtoaster(message): void {
     this.toaster = true;
     this.message = message;
-    setTimeout(() => { this.toaster = false }, 3000);
+    setTimeout(() => {
+      this.toaster = false;
+    }, 3000);
   }
 
-  public unLock() {
-    if (confirm('Are you sure')) {
+  public unLock(): void {
+    if (confirm(CONSTANT.CONFIRM_MESSAGE)) {
       this.notepad.isLock = !this.notepad.isLock;
-      this.showtoaster('file unlocked Sucessfully');
+      this.showtoaster(CONSTANT.FILE_UNLOCK_MESSAGE);
     }
   }
-  ngOnDestroy(): void {
-  }
-}
+
+ }
