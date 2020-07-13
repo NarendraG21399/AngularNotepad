@@ -5,7 +5,7 @@
 <button  class="w3-button w3-black w3-margin-bottom" *ngIf="!notepad.isLock"  (click)="lockNotepad()">Lock</button>
 </div>
 <form role="form"   accept-charset="UTF-8">
-  <textarea autofocus cols="150" rows="40" [(ngModel)]="notepad.text" [ngModelOptions]="{standalone: true}"></textarea>
+  <textarea #autofocus    [(ngModel)]="notepad.text" [ngModelOptions]="{standalone: true}"></textarea>
   </form>
   </div>
   <app-password-verify-dialo *ngIf="password" [fromCreateNote]="true" (onclosed)="savePassword($event)"></app-password-verify-dialo>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { notepad } from '../model/notepad';
 import { NotepadService } from 'src/app/service/notepad.service';
@@ -8,7 +8,8 @@ import { NotepadService } from 'src/app/service/notepad.service';
   templateUrl: './crete-notepad.component.html',
   styleUrls: ['./crete-notepad.component.scss']
 })
-export class CreteNotepadComponent implements OnInit, OnDestroy {
+export class CreteNotepadComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('autofocus') focus: ElementRef;
   private id: number;
   public notepad: any = { isLock: false, password: null };
   public text: string;
@@ -23,14 +24,15 @@ export class CreteNotepadComponent implements OnInit, OnDestroy {
       console.log(this.id)
     });
   }
+
   ngOnInit(): void {
     if (this.id) {
       this.notepad = this.notepadservice.getList().find(data => data.id === this.id);
-
     }
-
   }
-
+  ngAfterViewInit(): void {
+    this.focus.nativeElement.focus();
+  }
   public saveNotepad(): void {
     if (this.id || this.notepad.id) {
       this.updateNoted();
@@ -43,7 +45,7 @@ export class CreteNotepadComponent implements OnInit, OnDestroy {
     if (event) {
       this.notepad = { id: new Date().getTime(), text: this.notepad.text, modified: new Date(), title: event, create: new Date(), isLock: this.notepad.isLock, password: this.notepad.password }
       this.notepadservice.setList(this.notepad);
-      
+
       this.showtoaster('file saved sucessfully!')
     }
   }
@@ -68,20 +70,20 @@ export class CreteNotepadComponent implements OnInit, OnDestroy {
     if (event) {
       this.notepad.isLock = !this.notepad.isLock;
       this.notepad.password = event;
-     this.showtoaster('file lock sucessfully!')
+      this.showtoaster('file lock sucessfully!')
     }
   }
 
-  private showtoaster(message){
+  private showtoaster(message) {
     this.toaster = true;
     this.message = message;
-    setTimeout(() => {this.toaster = false }, 3000);
+    setTimeout(() => { this.toaster = false }, 3000);
   }
 
-  public unLock(){
-    if(confirm('Are you sure')){
-    this.notepad.isLock = !this.notepad.isLock;
-    this.showtoaster('file unlocked Sucessfully');
+  public unLock() {
+    if (confirm('Are you sure')) {
+      this.notepad.isLock = !this.notepad.isLock;
+      this.showtoaster('file unlocked Sucessfully');
     }
   }
   ngOnDestroy(): void {
