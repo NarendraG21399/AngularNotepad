@@ -6,8 +6,8 @@
            
             <div class="w3-third w3-margin-bottom" *ngFor="let note of notepadList">
                 <div class="w3-container w3-white" >
-                    <span  class="delete"   (click)="delete(note)"> <i class="fa fa-trash"></i></span>
-                     <p><b>{{note.title}}</b></p>
+                    <span  class="delete"  (click)="delete(note)"> <i class="fa fa-trash"></i></span>
+                     <p><i class="fa fa-file"></i> <b>   {{note.title}}</b></p>
                     <p>Create Date: {{note.create | date}}</p>
                     <p>Modified Date: {{note.modified | date:'medium'}}</p>
                     <div class="btn">

@@ -18,19 +18,21 @@ export class HomepageComponent implements OnInit {
     this.getNotepadList();
   }
 
-  private getNotepadList() {
+  private getNotepadList(): void{
     this.notepadList = this.notepadservice.getList();
   }
-  public navigate(notepad: Notepad) {
+  public navigate(notepad: Notepad): void {
     if (notepad.isLock) {
       this.showModel = true;
       this.selectedList = notepad;
       return;
     }
+    this.notepadservice.isAuthenticate = true;
     this.router.navigate([ROUTINGPATH.EDIT_NOTEPAD, notepad.id]);
   }
-  public validate(data?) {
+  public validate(data?): void {
     if (data) {
+      this.notepadservice.isAuthenticate = true;
       this.router.navigate([ROUTINGPATH.EDIT_NOTEPAD, this.selectedList.id]);
     }
     this.showModel = false;

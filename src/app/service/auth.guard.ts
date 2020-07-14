@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { NotepadService } from './notepad.service';
 
 @Injectable({
@@ -7,8 +7,12 @@ import { NotepadService } from './notepad.service';
 })
 export class AuthGuard implements CanActivate {
   constructor(private router: Router, private notepadService: NotepadService) { }
-  canActivate(): boolean {
-    return  true;
+  canActivate(route: ActivatedRouteSnapshot): boolean {
+     if (this.notepadService.isAuthenticate || !this.notepadService.getNotepad(+route.params.id).isLock){
+       return true;
+     }
+     this.router.navigate(['/home']);
+     return false;
   }
 
 }
