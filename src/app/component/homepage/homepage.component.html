@@ -3,19 +3,17 @@
     <div class="w3-container w3-content w3-padding-64" style="max-width:1400px">
         <h2 class="w3-wide w3-center">YOUR NOTES</h2>
         <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
-           
             <div class="w3-third w3-margin-bottom" *ngFor="let note of notepadList">
                 <div class="w3-container w3-white" >
-                    <span  class="delete"  (click)="delete(note)"> <i class="fa fa-trash"></i></span>
+                    <span  class="delete" > <i *ngIf="note.isLock" class="fa fa-lock"></i> <i  (click)="delete(note)" class="fa fa-trash"></i></span>
                      <p><i class="fa fa-file"></i> <b>   {{note.title}}</b></p>
                     <p>Create Date: {{note.create | date}}</p>
                     <p>Modified Date: {{note.modified | date:'medium'}}</p>
                     <div class="btn">
-                    <button class="w3-button w3-black w3-margin-bottom"  (click)="navigate(note)">EDIT <i *ngIf="note.isLock" class="fa fa-lock"></i></button>
+                    <button class="w3-button w3-black w3-margin-bottom" (click)="navigate(note)">EDIT <i *ngIf="note.isLock" class="fa fa-lock"></i></button>
                     </div>   
                 </div>
-            </div>
-            
+            </div> 
         </div>
     </div>
 </div> 

@@ -61,6 +61,10 @@ export class CreteNotepadComponent implements OnInit, AfterViewInit {
     this.showtoaster(CONSTANT.FILE_UPDATE__MESSAGE);
   }
   public lockNotepad(): void {
+    if (!this.notepad.title){
+      this.showtoaster(CONSTANT.FILE_SAVE);
+      return;
+    }
     this.password = true;
   }
   public savePassword(event): void {

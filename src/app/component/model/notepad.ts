@@ -1,5 +1,4 @@
 import { title } from 'process';
-
 export class Notepad {
     id?: number;
     text?: string;

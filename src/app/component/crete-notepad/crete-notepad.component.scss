@@ -11,10 +11,12 @@ form {
 textarea {
   width: 80%;
   height: 100%;
+  resize: none;
+  outline: none;
 }
 
 .btn {
   display: flex;
   justify-content: center;
+
 }
- 
